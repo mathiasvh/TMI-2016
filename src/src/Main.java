@@ -1,14 +1,10 @@
 package src;
 
-import java.awt.FileDialog;
 import java.io.File;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.awt.*; import javax.swing.*;
+import javax.swing.JFileChooser;
 
-import example.Cirkel;
-import example.Punt;
 
 public class Main {
 //tt

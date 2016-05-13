@@ -19,19 +19,19 @@ public class IllegalCoordinateException extends RuntimeException {
 	 * @post The coordinate for this new illegal coordinate exception is the same
 	 *       as the coordinate. | new.getCoordinate() == coordinate
 	 */
-	public IllegalCoordinateException(int coordinate) {
+	public IllegalCoordinateException(double coordinate) {
 		this.coordinate = coordinate;
 	}
 
 	/**
 	 * Return the coordinate of this illegal coordinate exception.
 	 */
-	public int getCoordinate() {
+	public double getCoordinate() {
 		return coordinate;
 	}
 
 	/**
 	 * Variable registering the coordinate of this illegal coordinate exception.
 	 */
-	private final int coordinate;
+	private final double coordinate;
 }

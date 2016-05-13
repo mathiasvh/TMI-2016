@@ -34,7 +34,7 @@ public class Position {
 	 * 			y-coordinate.
 	 * 			| !isValidCoordinate(y)
 	 */
-	public Position(int x, int y) throws IllegalCoordinateException {
+	public Position(double x, double y) throws IllegalCoordinateException {
 		if (!isValidCoordinate(x))
 			throw new IllegalCoordinateException(x);
 		this.x = x;
@@ -49,9 +49,9 @@ public class Position {
 	 * @param	cor
 	 * 			The coordinate to check.
 	 * @return	True if and only if the given coordinate is not Not-A-Number.
-	 * 			| result == !Double.isNaN(cor)
+	 * 			| result == (val >= 0)
 	 */
-	public static boolean isValidCoordinate(int val) {
+	public static boolean isValidCoordinate(double val) {
 		return val >= 0;
 	}
 	
@@ -76,7 +76,7 @@ public class Position {
 	 * 			This position cannot have the given x-coordinate as its x-coordinate.
 	 * 			| !isValidCoordinate(x)
 	 */
-	public void setX(int x) throws IllegalCoordinateException{
+	public void setX(double x) throws IllegalCoordinateException{
 		if (!isValidCoordinate(x))
 			throw new IllegalCoordinateException(x);
 		this.x = x;
@@ -85,14 +85,14 @@ public class Position {
 	/**
 	 * Variable registering the x-coordinate of this position.
 	 */
-	private int x;
+	private double x;
 	
 	/**
 	 * Return the y-coordinate of this position.
 	 *	The y-coordinate of a position determines where the position is on
 	 *	a y-axis.
 	 */
-	public int getY(){
+	public double getY(){
 		return this.y;
 	}
 	
@@ -108,7 +108,7 @@ public class Position {
 	 * 			This position cannot have the given y-coordinate as its y-coordinate.
 	 * 			| !isValidCoordinate(y)
 	 */
-	public void setY(int y) throws IllegalCoordinateException{
+	public void setY(double y) throws IllegalCoordinateException{
 		if (!isValidCoordinate(y))
 			throw new IllegalCoordinateException(y);
 		this.y = y;
@@ -117,7 +117,7 @@ public class Position {
 	/**
 	 * Variable registering the y-coordinate of this position.
 	 */
-	private int y;
+	private double y;
 
 	/**
 	 * Calculates and returns the distance between this position and the given position.
@@ -125,11 +125,11 @@ public class Position {
 	 * @param	end
 	 * 			The end position for which the distance will be calculated.
 	 * @return	The distance between this position and the given position.
-	 * 			| result == (int) Math.sqrt( Math.pow(getX() - end.getX(), 2) + 
+	 * 			| result == (double) Math.sqrt( Math.pow(getX() - end.getX(), 2) + 
 	 * 			|				Math.pow( getY() - end.getY(), 2))
 	 */
-	public int getDistanceTo(Position end) {
-		return (int) Math.sqrt( Math.pow(getX() - end.getX(), 2) + Math.pow( getY() - end.getY(), 2));
+	public double getDistanceTo(Position end) {
+		return Math.sqrt( Math.pow(getX() - end.getX(), 2) + Math.pow( getY() - end.getY(), 2));
 	}
 
 	/**
@@ -151,6 +151,15 @@ public class Position {
 					/ (getX() - end.getX()));
 	}
 	
+	/**
+	 * Checks whether or not this point equals the other given position.
+	 * 
+	 * @param	other
+	 * 			The other position for which will be checked if it equals this position.
+	 * @return	True if and only if both the value of this x equals that of the other x, 
+	 *          and the value of this y equals that of the other y.
+	 * 			| result == (getX() == other.getX() && getY() == other.getY())
+	 */
 	public boolean equals (Position other){
 		return getX() == other.getX() && getY() == other.getY();
 	}

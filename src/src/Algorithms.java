@@ -11,29 +11,38 @@ public final class Algorithms {
 		ALGO_VERSION = version;
 	}
 	
-	public void execute(ArrayList<Rectangle> rectangleList) throws AssertionError{
-		if (ALGO_VERSION == 1)
-			algorithm1(rectangleList);
-		if (ALGO_VERSION == 2)
-			algorithm2(rectangleList);
-		if (ALGO_VERSION == 3)
-			algorithm3(rectangleList);
-		if (ALGO_VERSION == 0)
-			throw new AssertionError();
+	public static void setNbFigures(int nbFigures){
+		NB_FIGURES = nbFigures;
 	}
 	
-	private static void algorithm3(ArrayList<Rectangle> rectangleList) {
+	public ArrayList<Position> execute(ArrayList<Rectangle> rectangleList) throws AssertionError{
+		
+		if (ALGO_VERSION == 1)
+			return algorithm1(rectangleList);
+		if (ALGO_VERSION == 2)
+			return algorithm2(rectangleList);
+		if (ALGO_VERSION == 3)
+			return algorithm3(rectangleList);
+		else
+			throw new AssertionError();			
+	}
+	
+	private static ArrayList<Position> algorithm3(ArrayList<Rectangle> rectangleList) {
+		return null;
 		// TODO Auto-generated method stub	
 	}
 
-	private static void algorithm2(ArrayList<Rectangle> rectangleList) {
+	private static ArrayList<Position> algorithm2(ArrayList<Rectangle> rectangleList) {
+		return null;
 		// TODO Auto-generated method stub
 	}
 
-	private static void algorithm1(ArrayList<Rectangle> rectangleList) {
+	private static ArrayList<Position> algorithm1(ArrayList<Rectangle> rectangleList) {
+		return null;
 		// TODO Auto-generated method stub
 	}
 
 	private static int ALGO_VERSION = 0;
+	private static int NB_FIGURES = 0;
 
 }

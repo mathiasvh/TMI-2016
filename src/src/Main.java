@@ -13,7 +13,7 @@ public class Main {
 		File input = new File("D:\\Dropbox\\School\\Fase 2\\Sem 2\\TMI\\project\\input.txt");
 		
 		ArrayList<Rectangle> rectangles = retrieveRectangles(input);
-		
+		ArrayList<Position> intersections = Algorithms.execute(rectangles);
 
 	}
 

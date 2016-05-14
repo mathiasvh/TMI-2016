@@ -15,16 +15,16 @@ public final class Algorithms {
 		NB_FIGURES = nbFigures;
 	}
 	
-	public ArrayList<Position> execute(ArrayList<Rectangle> rectangleList) throws AssertionError{
+	public static ArrayList<Position> execute(ArrayList<Rectangle> rectangleList) throws AssertionError{
 		
 		if (ALGO_VERSION == 1)
 			return algorithm1(rectangleList);
-		if (ALGO_VERSION == 2)
+		else if (ALGO_VERSION == 2)
 			return algorithm2(rectangleList);
-		if (ALGO_VERSION == 3)
+		else if (ALGO_VERSION == 3)
 			return algorithm3(rectangleList);
 		else
-			throw new AssertionError();			
+			throw new AssertionError();		
 	}
 	
 	private static ArrayList<Position> algorithm3(ArrayList<Rectangle> rectangleList) {

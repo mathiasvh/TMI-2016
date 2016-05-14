@@ -22,7 +22,7 @@ public class Stopwatch {
 
 
 	  //elapsed time in milliseconds
-	  public long getElapsedTime() {
+	  public long getElapsedTimeInMs() {
 		  long elapsed;
 	    if (running) {
 	      elapsed = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime);;

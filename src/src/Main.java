@@ -1,41 +1,48 @@
 package src;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import javax.swing.JFileChooser;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
-		// File input = retrieveFile();
-		File input = new File("D:\\Dropbox\\School\\Fase 2\\Sem 2\\TMI\\project\\input.txt");
-		
-		ArrayList<Rectangle> rectangles = retrieveRectangles(input);
-		ArrayList<Position> intersections = Algorithms.execute(rectangles);
+		boolean test = false;
 
+		File input;
+		String path;
+		Algorithm algorithm = new Algorithm();
+		Stopwatch timer = new Stopwatch();
+		MyFileHandler fileHandler = new MyFileHandler();
+
+		if (test) {
+			path = "D:\\Dropbox\\School\\Fase 2\\Sem 2\\TMI\\project\\";
+			input = new File(path + "input.txt");
+		} else {
+			input = fileHandler.retrieveFile();
+			path = input.getParent() + "\\";
+		}
+
+		ArrayList<Rectangle> rectangles = retrieveRectangles(input, algorithm);
+
+		timer.start();
+		ArrayList<Position> intersections = algorithm.execute(rectangles);
+		timer.stop();
+
+		fileHandler.outputFile(intersections, timer.getElapsedTimeInMs(), path);
 	}
 
-	private static File retrieveFile() {
-		JFileChooser fileChooser = new JFileChooser(System.getProperty("user.home"));
-		int result = fileChooser.showOpenDialog(null);
-		if (result == JFileChooser.APPROVE_OPTION) {
-			File selectedFile = fileChooser.getSelectedFile();
-			System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-			return selectedFile;
-		} else
-			return null;
-	}
-
-	private static ArrayList<Rectangle> retrieveRectangles(File file) {
+	private static ArrayList<Rectangle> retrieveRectangles(File file, Algorithm algo) {
 		try {
 			ArrayList<Rectangle> rectangleList = new ArrayList<Rectangle>();
 			Scanner reader = new Scanner(file);
 
+			algo.setVersion(Integer.valueOf(reader.nextLine()));
 			int nbRectangles = Integer.valueOf(reader.nextLine());
-			Algorithms.setNbFigures(nbRectangles);
-			Algorithms.setVersion(Integer.valueOf(reader.nextLine()));
+			algo.setNbFigures(nbRectangles);
+
 			for (int i = 0; i < nbRectangles; i++) {
 				String rectangleString = reader.nextLine();
 				String[] rectangleStringSplit = rectangleString.split(" ");
@@ -45,9 +52,11 @@ public class Main {
 						Double.parseDouble(rectangleStringSplit[3]));
 				rectangleList.add(new Rectangle(lb, rt));
 			}
+			reader.close();
 			return rectangleList;
 		} catch (Exception e) {
-			System.err.println("File not found!\n Error log: " + e.toString());
+			System.err.println("File is not found or does not meet expected layout !"
+					+ System.getProperty("line.separator") + "Error log: " + e.toString());
 			return new ArrayList<Rectangle>();
 		}
 	}

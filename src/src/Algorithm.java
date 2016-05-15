@@ -34,9 +34,12 @@ public final class Algorithm {
 	}
 
 	private ArrayList<Position> algorithm1(ArrayList<Rectangle> rectangleList) {
-		/*ArrayList<Position> validPositions = new ArrayList<Position>();
-		for (Rectangle rec : rectangleList)*/
-		return null;
+		ArrayList<Position> intersections = new ArrayList<Position>();
+		for (int i = 0; i < rectangleList.size(); i++) {
+			for (int j = i + 1; j < rectangleList.size(); j++)
+				intersections.addAll(rectangleList.get(i).getIntersections(rectangleList.get(j)));
+		}
+		return intersections;
 	}
 
 	private ArrayList<Position> algorithm2(ArrayList<Rectangle> rectangleList) {

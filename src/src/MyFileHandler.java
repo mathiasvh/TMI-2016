@@ -32,8 +32,8 @@ public class MyFileHandler {
 			return;
 		} else {
 			for (Position intersect : intersections)
-				writer.write(intersect.getX() + " " + intersect.getY() + "\n");
-			writer.write("\n");
+				writer.println(intersect.getX() + " " + intersect.getY());
+			writer.println();
 			writer.write("Execution time in ms: " + elapsedTimeMs + "");
 			writer.close();
 		}

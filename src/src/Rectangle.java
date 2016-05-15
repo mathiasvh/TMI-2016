@@ -38,8 +38,10 @@ public class Rectangle {
 	 *         <code>Rectangle</code>; or if the rectangles do not intersect, an
 	 *         empty rectangle.
 	 */
-	public ArrayList<Position> getIntersectionRectangle(Rectangle other) { 
-		//TODO ordelijk opdelen in verschillende methodes
+	public ArrayList<Position> getIntersections(Rectangle other) {
+		if (!this.overlaps(other))
+			return new ArrayList<Position>();
+		
 		double lb1x = this.leftBottom.getX();
 		double lb1y = this.leftBottom.getY();
 		double rt1x = this.rightTop.getX();
@@ -69,16 +71,16 @@ public class Rectangle {
 					|| (pos.getY() == rt1y);
 			boolean isIntersectionWithOther = (pos.getX() == lb2x) || (pos.getX() == rt2x) || (pos.getY() == lb2y)
 					|| (pos.getY() == rt2y);
-			
+
 			boolean intersectsOnIdenticalX = ((pos.getX() == lb1x) && (pos.getX() == lb2x))
 					|| ((pos.getX() == rt1x) && (pos.getX() == rt2x));
 			boolean intersectsOnIdenticalY = ((pos.getY() == lb1y) && (pos.getY() == lb2y))
 					|| ((pos.getY() == rt1y) && (pos.getY() == rt2y));
-			
+
 			boolean isIntersectionWithBoth = isIntersectionWithThis && isIntersectionWithOther;
 			boolean intersectsOnIdenticalAxis = intersectsOnIdenticalX || intersectsOnIdenticalY;
 			boolean isValidIntersect = isIntersectionWithBoth && !intersectsOnIdenticalAxis;
-			
+
 			if (isValidIntersect) {
 				validIntersections.add(pos);
 			}

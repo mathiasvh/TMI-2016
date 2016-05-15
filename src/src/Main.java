@@ -9,7 +9,7 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 
-		boolean test = false;
+		boolean test = true;
 
 		File input;
 		String path;

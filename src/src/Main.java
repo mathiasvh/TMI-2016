@@ -3,27 +3,46 @@ package src;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
 
 	public static void main(String[] args) throws IOException {
 
-		boolean test = true;
+		/*
+		 * choice == 1 -> user can choose the input file. choice == 2 -> test the
+		 * basic test file. choice == 3 -> test and plot randomly generated
+		 * rectangles.
+		 */
+		int choice = 3;
+
+		if (choice == 1)
+			executeUserDefinedFile();
+		else if (choice == 2)
+			executeTestFile();
+		else if (choice == 3)
+			executeTestCase();
+		else
+			throw new AssertionError();
+		System.out.println("done.");
+	}
+
+	private static void executeTestCase() throws IOException {
+		TestCase testCase = new TestCase();
+		testCase.execute();
+	}
+
+	private static void executeUserDefinedFile() throws IOException {
 
 		File input;
-		String path;
+		String workpath;
 		Algorithm algorithm = new Algorithm();
 		Stopwatch timer = new Stopwatch();
 		MyFileHandler fileHandler = new MyFileHandler();
 
-		if (test) {
-			path = "D:\\Dropbox\\School\\Fase 2\\Sem 2\\TMI\\project\\";
-			input = new File(path + "input.txt");
-		} else {
-			input = fileHandler.retrieveFile();
-			path = input.getParent() + "\\";
-		}
+		input = fileHandler.retrieveFile();
+		workpath = input.getParent() + "\\";
 
 		ArrayList<Rectangle> rectangles = retrieveRectangles(input, algorithm);
 
@@ -31,7 +50,27 @@ public class Main {
 		ArrayList<Position> intersections = algorithm.execute(rectangles);
 		timer.stop();
 
-		fileHandler.outputFile(intersections, timer.getElapsedTimeInMs(), path);
+		fileHandler.outputFile(intersections, timer.getElapsedTimeInMs(), workpath);
+	}
+
+	private static void executeTestFile() throws IOException {
+
+		File input;
+		String workpath;
+		Algorithm algorithm = new Algorithm();
+		Stopwatch timer = new Stopwatch();
+		MyFileHandler fileHandler = new MyFileHandler();
+
+		workpath = "D:\\Dropbox\\School\\Fase 2\\Sem 2\\TMI\\project\\";
+		input = new File(workpath + "input.txt");
+
+		ArrayList<Rectangle> rectangles = retrieveRectangles(input, algorithm);
+
+		timer.start();
+		ArrayList<Position> intersections = algorithm.execute(rectangles);
+		timer.stop();
+
+		fileHandler.outputFile(intersections, timer.getElapsedTimeInMs(), workpath);
 	}
 
 	private static ArrayList<Rectangle> retrieveRectangles(File file, Algorithm algo) {
@@ -60,5 +99,4 @@ public class Main {
 			return new ArrayList<Rectangle>();
 		}
 	}
-
 }

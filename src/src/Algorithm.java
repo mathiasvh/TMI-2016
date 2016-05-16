@@ -5,6 +5,14 @@ import java.util.Collections;
 import java.util.HashSet;
 
 public final class Algorithm {
+	
+	public Algorithm(){
+		
+	}
+	
+	public Algorithm(int version){
+		this.version = version;
+	}
 
 	public void setVersion(int version) {
 		this.version = version;

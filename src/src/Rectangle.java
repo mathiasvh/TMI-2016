@@ -1,6 +1,7 @@
 package src;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Rectangle {
 
@@ -102,4 +103,22 @@ public class Rectangle {
 	}
 
 	private final Position leftBottom, rightTop;
+
+	public static ArrayList<Rectangle> generateRandomRectangles(int n, double maxEdge) {
+		ArrayList<Rectangle> rectangles = new ArrayList<Rectangle>();
+		Random r = new Random();
+		for (int i = 0; i < n; i++) {
+			Position leftBottom, rightTop;
+			boolean validPosition, validEdge;
+			do {
+				leftBottom = new Position(r.nextDouble(), r.nextDouble());
+				rightTop = new Position(r.nextDouble(), r.nextDouble());
+				validPosition = (leftBottom.getX() < rightTop.getX()) && (leftBottom.getY() < rightTop.getY());
+				validEdge = (rightTop.getX() - leftBottom.getX() <= maxEdge)
+						&& (rightTop.getY() - leftBottom.getY() <= maxEdge);
+			} while (!validPosition || !validEdge);
+			rectangles.add(new Rectangle(leftBottom, rightTop));
+		}
+		return rectangles;
+	}
 }

@@ -139,6 +139,7 @@ public class Queue<Item> implements Iterable<Item> {
     }
 
     // an iterator, doesn't implement remove() since it's optional
+    @SuppressWarnings("all")
     private class ListIterator<Item> implements Iterator<Item> {
         private Node<Item> current;
 

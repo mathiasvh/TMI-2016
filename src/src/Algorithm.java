@@ -1,6 +1,8 @@
 package src;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 
 public final class Algorithm {
 
@@ -34,6 +36,7 @@ public final class Algorithm {
 	}
 
 	private ArrayList<Position> algorithm1(ArrayList<Rectangle> rectangleList) {
+		System.out.println("Algo1 in action!");
 		ArrayList<Position> intersections = new ArrayList<Position>();
 		for (int i = 0; i < rectangleList.size(); i++) {
 			for (int j = i + 1; j < rectangleList.size(); j++)
@@ -43,13 +46,69 @@ public final class Algorithm {
 	}
 
 	private ArrayList<Position> algorithm2(ArrayList<Rectangle> rectangleList) {
-		return null;
-		// TODO Auto-generated method stub
+		System.out.println("Algo2 in action!");
+		ArrayList<Unit> units = createUnits(rectangleList);
+		HashSet<Rectangle> activeRecs = new HashSet<Rectangle>();
+		ArrayList<Position> intersections = new ArrayList<Position>();
+
+		for (Unit unit : units) {
+			if (unit.isLeft()) {
+				for (Rectangle activeRec : activeRecs)
+					intersections.addAll(unit.getRectangle().getIntersections(activeRec));
+				activeRecs.add(unit.getRectangle());
+			} else
+				activeRecs.remove(unit.getRectangle());
+		}
+		return intersections;
 	}
 
+	/*
+	 * queue: sorted on center point of rectangle
+	 */
 	private ArrayList<Position> algorithm3(ArrayList<Rectangle> rectangleList) {
-		return null;
-		// TODO Auto-generated method stub
+		System.out.println("Algo3 in action!");
+		ArrayList<Unit> units = createUnits(rectangleList);
+		ArrayList<Position> intersections = new ArrayList<Position>();
+		BST<Double, Rectangle> queue = new BST<Double, Rectangle>();
+		BST<Double, Integer> reaches = new BST<Double, Integer>();
+		double maxReach = 0D;
+
+		for (Unit unit : units) {
+			final double currentReach = unit.getRectangle().getHeight() / 2;
+			if (unit.isLeft()) {
+				final double lo = unit.getRectangle().getLeftBottom().getY() - maxReach;
+				final double hi = unit.getRectangle().getRightTop().getY() + maxReach;
+				for (double activeRecKey : queue.keys(lo, hi))
+					intersections.addAll(unit.getRectangle().getIntersections(queue.get(activeRecKey)));
+
+				queue.put(new Double(unit.getRectangle().getCenter().getY()), unit.getRectangle());
+				maxReach = Math.max(maxReach, currentReach);
+				if (reaches.contains(currentReach))
+					reaches.put(currentReach, reaches.get(currentReach) + 1);
+				else
+					reaches.put(currentReach, 1);
+			} else {
+				queue.delete(unit.getRectangle().getCenter().getY());
+				if (reaches.get(currentReach) > 1)
+					reaches.put(currentReach, reaches.get(currentReach) - 1);
+				else
+					reaches.delete(currentReach);
+				maxReach = reaches.isEmpty() ? 0D : reaches.max();
+			}
+		}
+		return intersections;
+	}
+
+	private ArrayList<Unit> createUnits(ArrayList<Rectangle> rectangleList) {
+		ArrayList<Unit> units = new ArrayList<Unit>(2 * rectangleList.size());
+		final boolean left = true;
+		final boolean right = false;
+		for (Rectangle rectangle : rectangleList) {
+			units.add(new Unit(rectangle, left));
+			units.add(new Unit(rectangle, right));
+		}
+		Collections.sort(units);
+		return units;
 	}
 
 	private int version = 0;

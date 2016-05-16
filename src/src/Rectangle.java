@@ -17,6 +17,20 @@ public class Rectangle {
 		return this.rightTop.getY() - this.leftBottom.getY();
 	}
 
+	public Position getLeftBottom() {
+		return this.leftBottom;
+	}
+
+	public Position getCenter() {
+		final double x = (leftBottom.getX() + rightTop.getX()) / 2;
+		final double y = (leftBottom.getY() + rightTop.getY()) / 2;
+		return new Position(x, y);
+	}
+
+	public Position getRightTop() {
+		return this.rightTop;
+	}
+
 	// Checks if this rectangle overlaps the other given rectangle.
 	public boolean overlaps(Rectangle other) {
 		return this.leftBottom.getX() < other.leftBottom.getX() + other.getWidth()
@@ -41,7 +55,7 @@ public class Rectangle {
 	public ArrayList<Position> getIntersections(Rectangle other) {
 		if (!this.overlaps(other))
 			return new ArrayList<Position>();
-		
+
 		double lb1x = this.leftBottom.getX();
 		double lb1y = this.leftBottom.getY();
 		double rt1x = this.rightTop.getX();
@@ -81,11 +95,9 @@ public class Rectangle {
 			boolean intersectsOnIdenticalAxis = intersectsOnIdenticalX || intersectsOnIdenticalY;
 			boolean isValidIntersect = isIntersectionWithBoth && !intersectsOnIdenticalAxis;
 
-			if (isValidIntersect) {
+			if (isValidIntersect)
 				validIntersections.add(pos);
-			}
 		}
-
 		return validIntersections;
 	}
 

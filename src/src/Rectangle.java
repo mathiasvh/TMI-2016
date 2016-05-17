@@ -93,8 +93,8 @@ public class Rectangle {
 					|| ((pos.getY() == rt1y) && (pos.getY() == rt2y));
 
 			boolean isIntersectionWithBoth = isIntersectionWithThis && isIntersectionWithOther;
-			boolean intersectsOnIdenticalAxis = intersectsOnIdenticalX || intersectsOnIdenticalY;
-			boolean isValidIntersect = isIntersectionWithBoth && !intersectsOnIdenticalAxis;
+			boolean intersectOnIdenticalAxis = intersectsOnIdenticalX || intersectsOnIdenticalY;
+			boolean isValidIntersect = isIntersectionWithBoth && !intersectOnIdenticalAxis;
 
 			if (isValidIntersect)
 				validIntersections.add(pos);

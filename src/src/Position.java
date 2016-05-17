@@ -1,5 +1,8 @@
 package src;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 /**
  * A class of positions involving a x-coordinate and a y-coordinate.
  * 
@@ -160,7 +163,24 @@ public class Position {
 	 *          and the value of this y equals that of the other y.
 	 * 			| result == (getX() == other.getX() && getY() == other.getY())
 	 */
-	public boolean equals (Position other){
-		return getX() == other.getX() && getY() == other.getY();
+	@Override
+	public boolean equals (Object otherobject){
+		if (otherobject == null) return false;
+	    if (otherobject == this) return true;
+	    if (!(otherobject instanceof Position)) return false;
+		Position other = (Position) otherobject;
+		return new EqualsBuilder().
+	            append(x, other.x).
+	            append(y, other.y).
+	            isEquals();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder(17, 31).append(x).append(y).toHashCode();
 	}
 }

@@ -10,9 +10,9 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 
 		/*
-		 * choice == 1 -> user can choose the input file. choice == 2 -> test the
-		 * basic test file. choice == 3 -> test and plot randomly generated
-		 * rectangles.
+		 * choice == 1 -> user can choose the input file. 
+		 * choice == 2 -> test the basic test file. 
+		 * choice == 3 -> test and plot randomly generated rectangles.
 		 */
 		int choice = 3;
 
@@ -57,6 +57,7 @@ public class Main {
 		File input;
 		String workpath;
 		Algorithm algorithm = new Algorithm();
+
 		Stopwatch timer = new Stopwatch();
 		MyFileHandler fileHandler = new MyFileHandler();
 

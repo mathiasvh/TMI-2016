@@ -17,14 +17,17 @@ public class TestCase {
 
 	public void execute() throws IOException {
 
-		int amount = 5000;
+		int amount = 1000;
 		int jump = amount / 100 == 0 ? 1 : amount / 100;
 		double maxEdge = 0.2;
-		int nbTests = 5;
+		int nbTests = 3;
 		boolean checkCorrectness = false;
 		String workpath = "D:\\Dropbox\\School\\Fase 2\\Sem 2\\TMI\\project\\";
 
-		XYSeriesCollection dataset = run(amount, maxEdge, jump, nbTests, checkCorrectness);
+		if (checkCorrectness)
+			checkCorrectness(amount, maxEdge, jump, nbTests);
+
+		XYSeriesCollection dataset = run(amount, maxEdge, jump, nbTests);
 
 		JFreeChart timeChart = ChartFactory.createScatterPlot("Algorithm 1, 2 en 3 with a maximum edge of " + maxEdge,
 				"Number of rectangles", "Time in ms", dataset, PlotOrientation.VERTICAL, true, false, false);
@@ -32,10 +35,7 @@ public class TestCase {
 		ChartUtilities.saveChartAsPNG(file, timeChart, 500, 500);
 	}
 
-	public static XYSeriesCollection run(int nbOfRectanglesLimit, double maxEdge, int jump, int nbTests,
-			boolean checkCorrectness) {
-		XYSeries serie1Time = new XYSeries("Algorithm 1"), serie2Time = new XYSeries("Algorithm 2"),
-				serie3Time = new XYSeries("Algorithm 3");
+	public static void checkCorrectness(int nbOfRectanglesLimit, double maxEdge, int jump, int nbTests) {
 
 		Algorithm algo1 = new Algorithm(1);
 		Algorithm algo2 = new Algorithm(2);
@@ -43,6 +43,35 @@ public class TestCase {
 		HashSet<Position> solution1 = new HashSet<Position>();
 		HashSet<Position> solution2 = new HashSet<Position>();
 		HashSet<Position> solution3 = new HashSet<Position>();
+
+		for (int i = 0; i <= nbOfRectanglesLimit; i += jump) {
+			System.out.println("---Number of rectangles: " + i + "---");
+
+			for (int j = 1; j <= nbTests; j++) {
+				ArrayList<Rectangle> rectangleList = Rectangle.generateRandomRectangles(i, maxEdge);
+				System.out.println("-test number: " + j + "-");
+
+				solution1.addAll(algo1.execute(rectangleList));
+				solution2.addAll(algo2.execute(rectangleList));
+				solution3.addAll(algo3.execute(rectangleList));
+
+				if (!solution1.equals(solution2) || !solution2.equals(solution3) || !solution1.equals(solution3)) {
+					System.out.println("1==2: " + solution1.equals(solution2));
+					System.out.println("1==3: " + solution1.equals(solution3));
+					System.out.println("2==3: " + solution2.equals(solution3));
+					throw new AssertionError();
+				}
+			}
+		}
+	}
+
+	public static XYSeriesCollection run(int nbOfRectanglesLimit, double maxEdge, int jump, int nbTests) {
+		XYSeries serie1Time = new XYSeries("Algorithm 1"), serie2Time = new XYSeries("Algorithm 2"),
+				serie3Time = new XYSeries("Algorithm 3");
+
+		Algorithm algo1 = new Algorithm(1);
+		Algorithm algo2 = new Algorithm(2);
+		Algorithm algo3 = new Algorithm(3);
 
 		for (int i = 0; i <= nbOfRectanglesLimit; i += jump) {
 			System.out.println("---Number of rectangles: " + i + "---");
@@ -68,16 +97,6 @@ public class TestCase {
 				algo3.execute(rectangleList);
 				timer.stop();
 				runningTime3 += timer.getElapsedTimeInMs();
-
-				if (!checkCorrectness)
-					continue;
-
-				if (!solution1.equals(solution2) || !solution2.equals(solution3) || !solution1.equals(solution3)) {
-					System.out.println("1==2: " + solution1.equals(solution2));
-					System.out.println("1==3: " + solution1.equals(solution3));
-					System.out.println("2==3: " + solution2.equals(solution3));
-				}
-
 			}
 
 			serie1Time.add(new XYDataItem(i, runningTime1 / nbTests));

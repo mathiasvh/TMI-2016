@@ -14,7 +14,7 @@ public class Main {
 		 * choice == 2 -> test the basic test file. 
 		 * choice == 3 -> test and plot randomly generated rectangles.
 		 */
-		int choice = 3;
+		int choice = 1;
 
 		if (choice == 1)
 			executeUserDefinedFile();
@@ -62,7 +62,7 @@ public class Main {
 		MyFileHandler fileHandler = new MyFileHandler();
 
 		workpath = "D:\\Dropbox\\School\\Fase 2\\Sem 2\\TMI\\project\\";
-		input = new File(workpath + "input.txt");
+		input = new File(workpath + "invoerrechthoeken.txt");
 
 		ArrayList<Rectangle> rectangles = retrieveRectangles(input, algorithm);
 

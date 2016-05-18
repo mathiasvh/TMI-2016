@@ -21,7 +21,7 @@ public class MyFileHandler {
 
 	public void outputFile(ArrayList<Position> intersections, long elapsedTimeMs, String path) throws IOException {
 
-		File output = new File(path + "output.txt");
+		File output = new File(path + "uitvoerrechthoeken.txt");
 		PrintWriter writer = new PrintWriter(output);
 		// output.createNewFile();
 
